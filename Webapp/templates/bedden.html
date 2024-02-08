@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}
+Bedden
+{% endblock %}
+{% block main_content %}
+<form class="flex items-center w-[50%]">
+    <label for="search" class="sr-only">Search</label>
+    <div class="relative w-full">
+
+        <input type="text" id="search"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full  p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500"
+            placeholder="Search..." required>
+
+    </div>
+    <button type="submit"
+        class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
+        <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+        </svg>Search
+    </button>
+</form>
+
+<!-- <table>
+    <tr>
+        <th>ID</th>
+        <th>Afdeling</th>
+        <th>Type Zorg</th>
+        <th>Status</th>
+    </tr>
+    <tbody>
+        {% for bed in bedden%}
+        <tr>
+            <td>{{bed['id']}}</td>
+            <td>{{bed['naam']}}</td>
+            <td>{{bed['type_zorg']}}</td>
+            <td>{{"beschikbaar" if bed['is_beschikbaar'] == 1 else "Niet"}}</td>
+        </tr>
+        {% endfor%}
+    </tbody>
+</table> -->
+
+<div class="relative overflow-x-auto py-8">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 light:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 light:bg-gray-700 light:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    ID
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Afdeling Naam
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Type Zorg
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Status
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Acties
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bed in bedden%}
+            <tr class="bg-white border-b light:bg-gray-800 light:border-gray-700">
+                <td scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap light:text-white">
+                    {{bed['id']}}
+                </td>
+                <td class="px-6 py-2">
+                    {{bed['naam']}}
+                </td>
+                <td class="px-6 py-2">
+                    {{bed['type_zorg']}}
+                </td>
+                <td class="px-6 py-2">
+                    {% if bed['is_beschikbaar'] == 1 %}
+                    <div
+                        class="w-full flex flex-row items-center gap-2 justify-left relative  bg-green-300 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded light:bg-green-900 light:text-green-300">
+                        <span class="relative flex h-3 w-3">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-800 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                        </span>Beschikbaar
+                    </div>
+                    {% else %}
+                    <div
+                        class="w-full flex flex-row items-center gap-2 justify-left relative bg-red-300 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded light:bg-red-900 light:text-red-300">
+                        <span class="relative flex h-3 w-3">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-800 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                        </span>Niet
+                        Beschikbaar
+                    </div>
+                    {% endif %}
+
+                </td>
+                <td class="px-6 py-2">
+                    <a href="/test/{{bed['id']}}">Edit</a>
+                    <a href="/test/{{bed['id']}}">Delete</a>
+                </td>
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

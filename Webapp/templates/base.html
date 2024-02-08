@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=`, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <link rel="icon" href="/static/images/MediBedTrackr.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <title>MediBedTrackr</title>
+</head>
+
+<body>
+    <div class="page">
+        <header class="navbar">
+            <div class="navbar-logo-container">
+
+                <img src="/static/images/MediBedTrackr.png" alt="MediBedTrackr Logo" class="navbar-logo">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/bedden">Bedden</a></li>
+                    <li><a href="/patienten">Patienen</a></li>
+                    <li><a href="/afdelingen">Afdelingen</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <h1 class="content-title">{% block title %}Title {% endblock %}</h1>
+            <div class="content-body">{% block main_content %}Main Content{% endblock %}</div>
+        </main>
+        <footer>
+
+        </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+</body>
+
+</html>
