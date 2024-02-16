@@ -3,5 +3,127 @@
 Patienten
 {% endblock %}
 {% block main_content %}
-This is the main content
+<form class="flex items-center w-[50%]" method="post" action="/patienten">
+    <label for="search" class="sr-only">Search</label>
+    <div class="relative w-full">
+
+        <input type="text" id="search" name="search"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full  p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500"
+            placeholder="Search...">
+
+    </div>
+    <button type="submit"
+        class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
+        <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+        </svg>Search
+    </button>
+
+    <a class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-red-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800" href="/patienten">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
+    </a>
+    
+</form>
+
+<div class="relative overflow-x-auto py-8">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 light:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 light:bg-gray-700 light:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Voornaam
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Achternaam
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Telefoon nr
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    ID
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Geboorte Datum
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Geslacht
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Acties
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patienten%}
+            <tr class="bg-white border-b light:bg-gray-800 light:border-gray-700">
+                <td scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap light:text-white">
+                    {{patient['voornaam']}}
+                </td>
+                <td class="px-6 py-2">
+                    {{patient['achternaam']}}
+                </td>
+                <td class="px-6 py-2">
+                    {{patient['telefoon_nr']}}
+                </td>
+                <td class="px-6 py-2">
+                    {{patient['id_nr']}}
+                </td>
+                <td class="px-6 py-2">
+                    {{patient['geboorte_datum']}}
+                </td>
+                <td class="px-6 py-2">
+                    {{patient['geslacht']}}
+                </td>                
+                <td class="px-6 py-2">
+                    <a href="#edit-patient{{patient['id']}}">Edit</a>
+                    <a href="/delete_patient/{{patient['id']}}" onclick="return confirm('Are You Sure You Want To Delete {{patient['voornaam']}}?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+</div>
+{% for patient in patienten%}
+<div id="edit-patient{{patient['id']}}" class="modal">
+    <form action="/edit_patient" method="post" class="p-[5px] bg-white w-[400px] h-[fit-content]">
+        <label for="naam"><p>Naam</p></label>
+        <input value={{patient['voornaam']}} type="text" name="voornaam" required>
+        
+        <label for="Fnaam"><p>Familie Naam</p></label>
+        <input value={{patient['achternaam']}} type="text" name="achternaam" required>
+
+        <label for="tel"><p>tel</p></label>
+        <input value={{patient['telefoon_nr']}} type="tel" name="telefoon_nr" required>
+
+        <label for="id_nr"><p>id_nr</p></label>
+        <input value={{patient['id_nr']}} type="text" name="id_nr" required>
+        
+        <label for="GD"><p>Geboorte Datum</p></label>
+        <input value={{patient['geboorte_datum']}} type="date" name="geboorte_datum" required>
+
+        <label for="geslacht"><p>geslacht</p></label>
+        <select name="geslacht">
+            <option value="man">man</option>
+            <option value="vrouw">vrouw</option>
+        </select>
+        <input value={{patient['id']}} type="text" name="id" hidden>
+
+        <a href="#"
+            class="inline-flex items-center py-2.5 px-3 ms-[50%] text-sm font-medium text-white bg-red-600 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 light:bg-red-600 light:hover:bg-red-700 light:focus:ring-red-800">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              </svg>
+        </a>
+
+        <button type="submit"
+            class="inline-flex items-center py-2.5 px-3 ms-[87%] text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              </svg>
+        </button>
+    </form>
+</div>
+{%endfor%}
 {% endblock %}

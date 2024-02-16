@@ -3,15 +3,23 @@
 Bedden
 {% endblock %}
 {% block main_content %}
-<form class="flex items-center w-[50%]">
+<form class="flex items-center w-[65%]" method="post" action="/bedden">
     <label for="search" class="sr-only">Search</label>
     <div class="relative w-full">
 
-        <input type="text" id="search"
+        <input type="text" id="search" name="search" value=""
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full  p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500"
-            placeholder="Search..." required>
+            placeholder="Search...">
 
     </div>
+    
+    
+    <select name="status" id="status" class="bg-gray-50 ms-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500">
+        <option value="">all</option>
+        <option value="0">bezet</option>
+        <option value="1">vrij</option>
+    </select>
+    
     <button type="submit"
         class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
         <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -19,6 +27,12 @@ Bedden
                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
         </svg>Search
     </button>
+    <a class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-red-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800" href="/bedden">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
+    </a>
+        
 </form>
 
 <!-- <table>
@@ -93,14 +107,49 @@ Bedden
 
                 </td>
                 <td class="px-6 py-2">
-                    <a href="/test/{{bed['id']}}">Edit</a>
-                    <a href="/test/{{bed['id']}}">Delete</a>
+                    <a href="#edit-bed{{bed['id']}}">Edit</a>
+                    <a href="/delete_bed/{{bed['id']}}" onclick="return confirm('Are You Sure You Want To Delete Bed Nr {{bed['id']}} van afdeling {{bed['naam']}}?')">Delete</a>
                 </td>
             </tr>
             {% endfor%}
         </tbody>
     </table>
 </div>
+{% for bed in bedden%}
+<div id="edit-bed{{bed['id']}}" class="modal">
+    <form action="/edit_bed" method="post" class="p-[5px] bg-white w-[400px] h-[fit-content]">
+
+        <label for="id"><p>Bed Nr</p></label>
+        <input value={{bed['id']}} type="text" name="id" readonly>
+
+        <label for="naam"><p>Naam</p></label>
+        <select name="afdeling">
+            {%for afdeling in B_afdeling%}
+            <option value={{afdeling['id']}}>{{afdeling['naam']}}</option>
+            {%endfor%}
+        </select>
+
+        <label for="status"><p>is_beschikbaar</p></label>
+        <select name="status">
+            <option value="1" {% if bed['is_beschikbaar'] == 1 %} selected {% endif %}>beschikbaar</option>
+            <option value="0" {% if bed['is_beschikbaar'] == 0 %} selected {% endif %}>niet beschikbaar</option>
+        </select>
 
 
+        <a href="#"
+            class="inline-flex items-center py-2.5 px-3 ms-[50%] text-sm font-medium text-white bg-red-600 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 light:bg-red-600 light:hover:bg-red-700 light:focus:ring-red-800">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              </svg>
+        </a>
+
+        <button type="submit"
+            class="inline-flex items-center py-2.5 px-3 ms-[87%] text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              </svg>
+        </button>
+    </form>
+</div>
+{%endfor%}
 {% endblock %}
