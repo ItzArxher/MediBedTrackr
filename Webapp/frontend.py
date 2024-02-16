@@ -30,7 +30,7 @@ def create_frontendblueprint(db_conn):
         curr = mysql.connection.cursor()
         curr.execute("SELECT a.naam, a.id FROM afdeling as a")
         B_afdeling = curr.fetchall()
-        curr.execute("SELECT b.id, a.naam, b.is_beschikbaar, b.afdeling_id FROM bed as b INNER JOIN afdeling AS a ON b.afdeling_id = a.id")
+        curr.execute("SELECT b.id, a.naam, a.id, b.is_beschikbaar, b.afdeling_id FROM bed as b INNER JOIN afdeling AS a ON b.afdeling_id = a.id")
         bedden = curr.fetchall()
         if request.method == 'POST':
             search = request.form['search']

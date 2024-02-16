@@ -124,7 +124,7 @@ Bedden
 
         <label for="naam"><p>Naam</p></label>
         <select name="afdeling">
-            <option value={{bed['naam']}}>{{bed['naam']}}</option>
+            <option value={{bed['afdeling_id']}}>{{bed['naam']}}</option>
             {%for afdeling in B_afdeling%}
             {% if afdeling['id'] != bed['afdeling_id'] %} <option value={{afdeling['id']}}>{{afdeling['naam']}}</option> {% endif %}            
             {%endfor%}
