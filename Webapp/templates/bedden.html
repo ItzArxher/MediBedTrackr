@@ -1,8 +1,36 @@
 {% extends "base.html" %}
 {% block title %}
-Bedden
+<div class="bg-green-800 p-2 shadow-2xl my-4 rounded-[10px]">
+
+    <h2 class="text-4xl font-extrabold dark:text-white">Bedden Tab</h2>
+    <p class="my-4 text-lg text-gray-200">Hier kunt u bedden toe voegen in het database, bekijken, veranderen en deleten.</p>
+</div>
+
 {% endblock %}
 {% block main_content %}
+<form class="my-[10px] form-control bg-gray-50 p-[10px] shadow-2xl" method="post" action="/create_bed">
+    <p class="rounded-full text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]">Nieuwe Bed Maken</p>
+    <div class="flex">
+        <select required name="afdeling" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="" selected>Kies Een Afdeling</option>
+            {%for afdeling in B_afdeling%}
+            <option value="{{afdeling['id']}}">{{afdeling['naam']}}</option>
+            {% endfor%}
+          </select>
+        
+        <select name="status" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option value="" selected required>Bepaal Status</option>
+          <option value="1">Beschikbaar</option>
+          <option value="0">Niet Beschikbaar</option>
+        </select>
+    </div>
+    <button class="my-[15px] text-center bg-green-700 font-extrabold px-[15px] py-2 rounded-[10px]" type="submit">
+    <svg class="text-center w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
+      </svg>
+    </button>
+  </form>
+
 <form class="flex items-center w-[65%]" method="post" action="/bedden">
     <label for="search" class="sr-only">Search</label>
     <div class="relative w-full">
@@ -107,8 +135,16 @@ Bedden
 
                 </td>
                 <td class="px-6 py-2">
-                    <a href="#edit-bed{{bed['id']}}">Edit</a>
-                    <a href="/delete_bed/{{bed['id']}}" onclick="return confirm('Are You Sure You Want To Delete Bed Nr {{bed['id']}} van afdeling {{bed['naam']}}?')">Delete</a>
+                    <a href="#edit-bed{{bed['id']}}" class="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.3 4.8 2.9 2.9M7 7H4a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h11c.6 0 1-.4 1-1v-4.5m2.4-10a2 2 0 0 1 0 3l-6.8 6.8L8 14l.7-3.6 6.9-6.8a2 2 0 0 1 2.8 0Z"/>
+                          </svg>
+                    </a>
+                    <a href="/delete_bed/{{bed['id']}}" onclick="return confirm('Are You Sure You Want To Delete Bed Nr {{bed['id']}} van afdeling {{bed['naam']}}?')" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                          </svg>    
+                    </a>
                 </td>
             </tr>
             {% endfor%}

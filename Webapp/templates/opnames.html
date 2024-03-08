@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block title %}
+<div class="bg-green-800 p-2 shadow-2xl my-4 rounded-[10px]">
+
+    <h2 class="text-4xl font-extrabold dark:text-white">Opnames Tab</h2>
+    <p class="my-4 text-lg text-gray-200">Hier kunt u opnames toe voegen in het database, bekijken, veranderen en deleten.</p>
+</div>
+
+{% endblock %}
+{% block main_content %}
+<form class="my-[10px] form-control bg-gray-50 p-[10px] shadow-2xl" method="post" action="/create_opname">
+    <p class="rounded-full text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]">Nieuwe Opname Maken</p>
+    <div class="flex">
+        <select required name="patient" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="" selected>Kies Een Patient</option>
+            {%for patient in PatientenInput%}
+            <option value="{{patient['id']}}">{{patient['voornaam']+' '+patient['achternaam']}}</option>
+            {% endfor%}
+          </select>
+        
+        <select name="bed_id" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option value="" selected required>Bed en Afdeling</option>
+          {%for bed in BedInput%}
+            <option value="{{bed['b.id']}}">{{"bed nummer "+ bed['b.id']|string +" in afdeling " + bed['naam']}}</option>
+            {% endfor%}
+        </select>
+
+        <input required type="date" placeholder="Datum Opname" name="opname_datumtijd" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        
+        <input required type="date" placeholder="Datum Opname" name="ontslag_datumtijd" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        
+    </div>
+    <button class="my-[15px] text-center bg-green-700 font-extrabold px-[15px] py-2 rounded-[10px]" type="submit">
+    <svg class="text-center w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
+      </svg>
+    </button>
+  </form>
+
+<form class="flex items-center w-[65%]" method="post" action="/opnames">
+    <label for="search" class="sr-only">Search</label>
+    <div class="relative w-full">
+
+        <input type="text" id="search" name="search" value=""
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full  p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500"
+            placeholder="Search...">
+
+    </div>
+    
+    
+    <select name="status" id="status" class="bg-gray-50 ms-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500">
+        <option value="">all</option>
+        <option value="0">bezet</option>
+        <option value="1">vrij</option>
+    </select>
+    
+    <button type="submit"
+        class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
+        <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+        </svg>Search
+    </button>
+    <a class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-red-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800" href="/bedden">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
+    </a>
+        
+</form>
+
+<!-- <table>
+    <tr>
+        <th>ID</th>
+        <th>Afdeling</th>
+        <th>Type Zorg</th>
+        <th>Status</th>
+    </tr>
+    <tbody>
+        {% for bed in bedden%}
+        <tr>
+            <td>{{bed['id']}}</td>
+            <td>{{bed['naam']}}</td>
+            <td>{{bed['type_zorg']}}</td>
+            <td>{{"beschikbaar" if bed['is_beschikbaar'] == 1 else "Niet"}}</td>
+        </tr>
+        {% endfor%}
+    </tbody>
+</table> -->
+
+
+<div class="relative overflow-x-auto py-8">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 light:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 light:bg-gray-700 light:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Patient
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Bed nummer
+                </th>
+
+                <th scope="col" class="px-6 py-3">
+                    Afdeling
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Opname Datum
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Ontslag Datum
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Acties
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for opname in opnameTable%}
+            <tr class="bg-white border-b light:bg-gray-800 light:border-gray-700">
+                <td scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap light:text-white">
+                    {{opname['voornaam']+' '+opname['achternaam']}}
+                </td>
+                <td class="px-6 py-2">
+                    {{opname['bed_id']}}
+                </td>
+                <td class="px-6 py-2">
+                    {{opname['naam']}}
+                </td>
+                <td class="px-6 py-2">
+                    {{opname['opname_datumtijd']}}
+                </td>
+                <td class="px-6 py-2">
+                    {{opname['ontslag_datumtijd']}}
+                </td>
+
+                
+                <td class="px-6 py-2">
+                    <a href="#edit-opname{{opname['id']}}" class="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.3 4.8 2.9 2.9M7 7H4a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h11c.6 0 1-.4 1-1v-4.5m2.4-10a2 2 0 0 1 0 3l-6.8 6.8L8 14l.7-3.6 6.9-6.8a2 2 0 0 1 2.8 0Z"/>
+                          </svg>
+                    </a>
+                    <a href="/delete_opname/{{opname['id']}}" onclick="return confirm('Are You Sure You Want To Delete opname Nr {{opname['id']}} van afdeling {{opname['naam']}}?')" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                          </svg>    
+                    </a>
+                </td>
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+</div>
+{% for opname in opnameTable%}
+<div id="edit-opname{{opname['id']}}" class="modal">
+    <form action="/edit_opname" method="post" class="p-[5px] bg-white w-[400px] h-[fit-content]">
+
+        <label for="id"><p>opname Nr</p></label>
+        <input value={{opname['id']}} type="text" name="id" readonly>
+
+        <label for="naam"><p>Naam</p></label>
+        <select name="afdeling">
+            <option value={{opname['afdeling_id']}}>{{opname['naam']}}</option>
+            {%for afdeling in B_afdeling%}
+            {% if afdeling['id'] != opname['afdeling_id'] %} <option value={{afdeling['id']}}>{{afdeling['naam']}}</option> {% endif %}            
+            {%endfor%}
+        </select>
+
+        <label for="status"><p>is_beschikbaar</p></label>
+        <select name="status">
+            <option value="1" {% if opname['is_beschikbaar'] == 1 %} selected {% endif %}>beschikbaar</option>
+            <option value="0" {% if opname['is_beschikbaar'] == 0 %} selected {% endif %}>niet beschikbaar</option>
+        </select>
+
+
+        <a href="#"
+            class="inline-flex items-center py-2.5 px-3 ms-[50%] text-sm font-medium text-white bg-red-600 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 light:bg-red-600 light:hover:bg-red-700 light:focus:ring-red-800">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              </svg>
+        </a>
+
+        <button type="submit"
+            class="inline-flex items-center py-2.5 px-3 ms-[87%] text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              </svg>
+        </button>
+    </form>
+</div>
+{%endfor%}
+{% endblock %}

@@ -1,8 +1,33 @@
 {% extends "base.html" %}
 {% block title %}
-Patienten
+<div class="bg-green-800 p-2 shadow-2xl my-4 rounded-[10px]">
+
+    <h2 class="text-4xl font-extrabold dark:text-white">Patienten Tab</h2>
+    <p class="my-4 text-lg text-gray-200">Hier kunt u patienten toe voegen in het database, bekijken, veranderen en deleten.</p>
+</div>
 {% endblock %}
 {% block main_content %}
+<form class="my-[10px] form-control bg-gray-50 p-[10px] shadow-2xl" method="post" action="/create_patient">
+    <p class="rounded-full text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]">Nieuwe Patient Maken</p>
+    <div class="flex">
+        <input required placeholder="Voornaam" name="voornaam" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        <input required placeholder="Achternaam" name="achternaam" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        <input required type="tel" pattern="[0-9]{3}-[0-9]{4}" placeholder="Telefoon Nr" name="telefoon_nr" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        <input required placeholder="ID" name="id_nr" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        <input required type="date" placeholder="Geboorte Datum" name="geboorte_datum" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        <select required name="geslacht" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option value="">Kies Een Geslacht</option>
+        <option value="man">Man</option>
+        <option value="vrouw">Vrouw</option>
+        </select>
+    </div>
+    <button class="my-[15px] text-center bg-green-700 font-extrabold px-[15px] py-2 rounded-[10px]" type="submit">
+    <svg class="text-center w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
+      </svg>
+    </button>
+  </form>
+
 <form class="flex items-center w-[50%]" method="post" action="/patienten">
     <label for="search" class="sr-only">Search</label>
     <div class="relative w-full">
