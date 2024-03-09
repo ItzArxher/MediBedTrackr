@@ -3,41 +3,48 @@
 <div class="bg-green-800 p-2 shadow-2xl my-4 rounded-[10px]">
 
     <h2 class="text-4xl font-extrabold dark:text-white">Bedden Tab</h2>
-    <p class="my-4 text-lg text-gray-200">Hier kunt u bedden toe voegen in het database, bekijken, veranderen en deleten.</p>
+    <p class="my-4 text-lg text-gray-200">Hier kunt u bedden toe voegen in het database, bekijken, veranderen en
+        deleten.</p>
 </div>
 
 {% endblock %}
 {% block main_content %}
 <form class="my-[10px] form-control bg-gray-50 p-[10px] shadow-2xl" method="post" action="/create_bed">
-    <p class="rounded-xl text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]">Bedden toevoegen</p>
+    <p class="rounded-xl text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]">
+        Bedden toevoegen</p>
     <div class="flex flex-col gap-2 items-center">
         <div>
             <label for="afdeling">Afdeling</label>
-            <select required name="afdeling" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select required name="afdeling"
+                class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="" disabled selected>-- Kies een afdeling --</option>
                 {%for afdeling in B_afdeling%}
                 <option value="{{afdeling['id']}}">{{afdeling['naam']}}</option>
                 {% endfor%}
             </select>
         </div>
-        
+
         <div>
             <label for="aantal_bedden">Aantal Bedden om toe te voegen</label>
-            <input type="number" value="1" step="1" min="1" required placeholder="Aantal bedden..." name="aantal_bedden" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+            <input type="number" value="1" step="1" min="1" required placeholder="Aantal bedden..." name="aantal_bedden"
+                class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
         </div>
-        
-        
+
+
     </div>
     <div class="flex flex-row justify-center items-center p-4">
-        <button class="flex flex-row gap-4 my-[15px] text-center text-white bg-green-700 px-[15px] py-2 rounded-[10px]" type="submit">
-            <svg class="text-center w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
+        <button class="flex flex-row gap-4 my-[15px] text-center text-white bg-green-700 px-[15px] py-2 rounded-[10px]"
+            type="submit">
+            <svg class="text-center w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m5 12 4.7 4.5 9.3-9" />
             </svg>
             <span>Bedden toevoegen</span>
         </button>
     </div>
-    
-  </form>
+
+</form>
 
 <form class="flex items-center w-[65%]" method="post" action="/bedden">
     <label for="search" class="sr-only">Search</label>
@@ -45,50 +52,35 @@
 
         <input type="text" id="search" name="search" value=""
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full  p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500"
-            placeholder="Search...">
+            placeholder="Zoeken...">
 
     </div>
-    
-    
-    <select name="status" id="status" class="bg-gray-50 ms-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500">
-        <option value="">all</option>
-        <option value="0">bezet</option>
-        <option value="1">vrij</option>
+
+
+    <select name="status" id="status"
+        class="bg-gray-50 ms-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500">
+        <option value="">Alle</option>
+        <option value="0">Bezet</option>
+        <option value="1">Beschikbaar</option>
     </select>
-    
+
     <button type="submit"
         class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
         <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-        </svg>Search
+        </svg>Zoeken
     </button>
-    <a class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-red-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800" href="/bedden">
-        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-          </svg>
+    <a class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-red-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800"
+        href="/bedden">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
     </a>
-        
-</form>
 
-<!-- <table>
-    <tr>
-        <th>ID</th>
-        <th>Afdeling</th>
-        <th>Type Zorg</th>
-        <th>Status</th>
-    </tr>
-    <tbody>
-        {% for bed in bedden%}
-        <tr>
-            <td>{{bed['id']}}</td>
-            <td>{{bed['naam']}}</td>
-            <td>{{bed['type_zorg']}}</td>
-            <td>{{"beschikbaar" if bed['is_beschikbaar'] == 1 else "Niet"}}</td>
-        </tr>
-        {% endfor%}
-    </tbody>
-</table> -->
+</form>
 
 <div class="relative overflow-x-auto py-8">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 light:text-gray-400">
@@ -143,15 +135,22 @@
 
                 </td>
                 <td class="px-6 py-2">
-                    <a href="#edit-bed{{bed['id']}}" class="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.3 4.8 2.9 2.9M7 7H4a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h11c.6 0 1-.4 1-1v-4.5m2.4-10a2 2 0 0 1 0 3l-6.8 6.8L8 14l.7-3.6 6.9-6.8a2 2 0 0 1 2.8 0Z"/>
-                          </svg>
+                    <a href="#edit-bed{{bed['id']}}"
+                        class="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m14.3 4.8 2.9 2.9M7 7H4a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h11c.6 0 1-.4 1-1v-4.5m2.4-10a2 2 0 0 1 0 3l-6.8 6.8L8 14l.7-3.6 6.9-6.8a2 2 0 0 1 2.8 0Z" />
+                        </svg>
                     </a>
-                    <a href="/delete_bed/{{bed['id']}}" onclick="return confirm('Are You Sure You Want To Delete Bed Nr {{bed['id']}} van afdeling {{bed['naam']}}?')" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
-                          </svg>    
+                    <a href="/delete_bed/{{bed['id']}}"
+                        onclick="return confirm('Are You Sure You Want To Delete Bed Nr {{bed['id']}} van afdeling {{bed['naam']}}?')"
+                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
+                        </svg>
                     </a>
                 </td>
             </tr>
@@ -160,40 +159,64 @@
     </table>
 </div>
 {% for bed in bedden%}
-<div id="edit-bed{{bed['id']}}" class="modal">
-    <form action="/edit_bed" method="post" class="p-[5px] bg-white w-[400px] h-[fit-content]">
+<div id="edit-bed{{bed['id']}}" class="modal fixed">
+    <form action="/edit_bed" method="post" class="p-8 bg-white rounded-xl  min-w-[400px] h-[fit-content]">
+        <div class="font-bold text-2xl py-2 text-center">
+            Bed wijzigen - Bed Nr. {{bed['id']}}
+        </div>
+        <div class="flex flex-col gap-4">
 
-        <label for="id"><p>Bed Nr</p></label>
-        <input value={{bed['id']}} type="text" name="id" readonly>
+            <div>
 
-        <label for="naam"><p>Naam</p></label>
-        <select name="afdeling">
-            <option value={{bed['afdeling_id']}}>{{bed['naam']}}</option>
-            {%for afdeling in B_afdeling%}
-            {% if afdeling['id'] != bed['afdeling_id'] %} <option value={{afdeling['id']}}>{{afdeling['naam']}}</option> {% endif %}            
-            {%endfor%}
-        </select>
+                <label for="naam">
+                    <p>Naam</p>
+                </label>
+                <select name="afdeling"
+                    class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value={{bed['afdeling_id']}}>{{bed['naam']}}</option>
+                    {%for afdeling in B_afdeling%}
+                    {% if afdeling['id'] != bed['afdeling_id'] %} <option value={{afdeling['id']}}>{{afdeling['naam']}}
+                    </option>
+                    {% endif %}
+                    {%endfor%}
+                </select>
+            </div>
+            <div>
 
-        <label for="status"><p>is_beschikbaar</p></label>
-        <select name="status">
-            <option value="1" {% if bed['is_beschikbaar'] == 1 %} selected {% endif %}>beschikbaar</option>
-            <option value="0" {% if bed['is_beschikbaar'] == 0 %} selected {% endif %}>niet beschikbaar</option>
-        </select>
+
+                <label for="status">
+                    <p>Beschikbaarheid</p>
+                </label>
+                <select name="status"
+                    class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="1" {% if bed['is_beschikbaar']==1 %} selected {% endif %}>Beschikbaar</option>
+                    <option value="0" {% if bed['is_beschikbaar']==0 %} selected {% endif %}>Niet beschikbaar</option>
+                </select>
+            </div>
+        </div>
 
 
-        <a href="#"
-            class="inline-flex items-center py-2.5 px-3 ms-[50%] text-sm font-medium text-white bg-red-600 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 light:bg-red-600 light:hover:bg-red-700 light:focus:ring-red-800">
-            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-              </svg>
-        </a>
+        <div class="flex flex-row justify-evenly py-2">
 
-        <button type="submit"
-            class="inline-flex items-center py-2.5 px-3 ms-[87%] text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
-            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-              </svg>
-        </button>
+
+            <a href="#"
+                class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-red-600 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 light:bg-red-600 light:hover:bg-red-700 light:focus:ring-red-800">
+                <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18 18 6m0 12L6 6" />
+                </svg>
+            </a>
+
+            <button type="submit"
+                class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+            </button>
+        </div>
     </form>
 </div>
 {%endfor%}

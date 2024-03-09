@@ -10,8 +10,8 @@
 {% endblock %}
 {% block main_content %}
 <form class="my-[10px] form-control bg-gray-50 p-[10px] shadow-2xl" method="post" action="/create_opname">
-    <p class="rounded-full text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]">
-        Nieuwe Opname Maken</p>
+    <p class="rounded-xl text-center font-extrabold bg-green-700 text-white shadow-2xl w-[300px] py-[10px] my-[10px]">
+        Nieuwe Opname Registreren</p>
     <div class="flex flex-row justify-evenly">
         <div class="flex flex-col gap-4">
 
@@ -43,14 +43,14 @@
 
             <div>
                 <label for="opname_datumtijd">Opname Datum</label>
-                <input required type="date" placeholder="Datum Opname" name="opname_datumtijd"
+                <input required type="datetime-local" placeholder="Datum Opname" name="opname_datumtijd"
                     class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </div>
 
             <div>
                 <label for="ontslag_datumtijd">Ontslag Datum</label>
 
-                <input type="date" placeholder="Datum Ontslag" name="ontslag_datumtijd"
+                <input type="datetime-local" placeholder="Datum Ontslag" name="ontslag_datumtijd"
                     class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 
             </div>
