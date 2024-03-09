@@ -36,9 +36,9 @@ def create_frontendblueprint(db_conn):
             search = request.form['search']
             status = request.form['status']
             if status == "":
-                curr.execute("SELECT b.id, a.naam, b.is_beschikbaar FROM bed as b INNER JOIN afdeling AS a ON b.afdeling_id = a.id WHERE (a.naam LIKE %s OR b.id LIKE %s)", ('%' + search + '%', '%' + search + '%',))
+                curr.execute("SELECT b.id, a.naam, a.id, b.is_beschikbaar, b.afdeling_id FROM bed as b INNER JOIN afdeling AS a ON b.afdeling_id = a.id WHERE (a.naam LIKE %s OR b.id LIKE %s)", ('%' + search + '%', '%' + search + '%',))
             else:
-                curr.execute("SELECT b.id, a.naam, b.is_beschikbaar FROM bed as b INNER JOIN afdeling AS a ON b.afdeling_id = a.id WHERE (a.naam LIKE %s OR b.id LIKE %s) AND b.is_beschikbaar=%s", ('%' + search + '%', '%' + search + '%',status))
+                curr.execute("SELECT b.id, a.naam, a.id, b.is_beschikbaar, b.afdeling_id FROM bed as b INNER JOIN afdeling AS a ON b.afdeling_id = a.id WHERE (a.naam LIKE %s OR b.id LIKE %s) AND b.is_beschikbaar=%s", ('%' + search + '%', '%' + search + '%',status))
             bedden = curr.fetchall()
         print(bedden)
         return render_template("bedden.html", bedden=bedden, B_afdeling=B_afdeling)
@@ -60,6 +60,9 @@ def create_frontendblueprint(db_conn):
             ID = request.form['id']
             afdeling = request.form['afdeling']
             status = request.form['status']
+            print(ID)
+            print(afdeling)
+            print(status)
             curr = mysql.connection.cursor()
             curr.execute("UPDATE bed SET afdeling_id=%s,is_beschikbaar=%s WHERE id = %s", (afdeling, status, ID))
             mysql.connection.commit()

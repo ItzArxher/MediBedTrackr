@@ -2,9 +2,8 @@
 {% block title %}
 <div class="bg-green-800 p-2 shadow-2xl my-4 rounded-[10px]">
 
-    <h2 class="text-4xl font-extrabold dark:text-white">Bedden Tab</h2>
-    <p class="my-4 text-lg text-gray-200">Hier kunt u bedden toe voegen in het database, bekijken, veranderen en
-        deleten.</p>
+    <h2 class="text-4xl font-extrabold dark:text-white">Bedden</h2>
+    <p class="my-4 text-lg text-gray-200">Hier kunt u bedden toevoegen, bekijken, wijzigen en verwijderen.</p>
 </div>
 
 {% endblock %}
@@ -144,7 +143,7 @@
                         </svg>
                     </a>
                     <a href="/delete_bed/{{bed['id']}}"
-                        onclick="return confirm('Are You Sure You Want To Delete Bed Nr {{bed['id']}} van afdeling {{bed['naam']}}?')"
+                        onclick="return confirm('Bent u zeker dat u Bed Nr {{bed['id']}} van afdeling {{bed['naam']}} wilt verwijderen?')"
                         class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -165,6 +164,7 @@
             Bed wijzigen - Bed Nr. {{bed['id']}}
         </div>
         <div class="flex flex-col gap-4">
+            <input type="hidden" value="{{bed['id']}}" name="id">
 
             <div>
 
@@ -173,9 +173,14 @@
                 </label>
                 <select name="afdeling"
                     class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value={{bed['afdeling_id']}}>{{bed['naam']}}</option>
                     {%for afdeling in B_afdeling%}
-                    {% if afdeling['id'] != bed['afdeling_id'] %} <option value={{afdeling['id']}}>{{afdeling['naam']}}
+                    {% if afdeling['id'] != bed['afdeling_id'] %}
+                    <option value="{{afdeling['id']}}">
+                        {{afdeling['naam']}}
+                    </option>
+                    {% else %}
+                    <option value="{{afdeling['id']}}" selected>
+                        {{afdeling['naam']}}
                     </option>
                     {% endif %}
                     {%endfor%}
@@ -184,13 +189,15 @@
             <div>
 
 
-                <label for="status">
+                <label for=" status">
                     <p>Beschikbaarheid</p>
                 </label>
                 <select name="status"
                     class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="1" {% if bed['is_beschikbaar']==1 %} selected {% endif %}>Beschikbaar</option>
-                    <option value="0" {% if bed['is_beschikbaar']==0 %} selected {% endif %}>Niet beschikbaar</option>
+                    <option value="1" {% if bed['is_beschikbaar']==1 %} selected {% endif %}>Beschikbaar
+                    </option>
+                    <option value="0" {% if bed['is_beschikbaar']==0 %} selected {% endif %}>Niet beschikbaar
+                    </option>
                 </select>
             </div>
         </div>
