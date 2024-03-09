@@ -3,8 +3,8 @@
 <div class="bg-green-800 p-2 shadow-2xl my-4 rounded-[10px]">
 
     <h2 class="text-4xl font-extrabold dark:text-white">Opnames Tab</h2>
-    <p class="my-4 text-lg text-gray-200">Hier kunt u opnames toe voegen in het database, bekijken, veranderen en
-        deleten.</p>
+    <p class="my-4 text-lg text-gray-200">Hier kunt u opnames toevoegen, bekijken, wijzigen en
+        verwijderen.</p>
 </div>
 
 {% endblock %}
@@ -27,9 +27,9 @@
             </div>
             <div>
                 <label for="bed_id">Bed</label>
-                <select name="bed_id"
+                <select name="bed_id" required
                     class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="" selected disabled required>-- Kies een Bed en Afdeling --</option>
+                    <option value="" selected disabled>-- Kies een Bed en Afdeling --</option>
                     {%for bed in BedInput%}
                     <option value="{{bed['b.id']}}">{{"Bed Nr. "+ bed['b.id']|string +" in Afdeling " + bed['naam']}}
                     </option>
@@ -47,13 +47,7 @@
                     class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </div>
 
-            <div>
-                <label for="ontslag_datumtijd">Ontslag Datum</label>
 
-                <input type="datetime-local" placeholder="Datum Ontslag" name="ontslag_datumtijd"
-                    class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-
-            </div>
         </div>
 
     </div>
@@ -78,27 +72,27 @@
 
         <input type="text" id="search" name="search" value=""
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full  p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500"
-            placeholder="Search...">
+            placeholder="Zoeken...">
 
     </div>
 
 
-    <select name="status" id="status"
+    <!-- <select name="status" id="status"
         class="bg-gray-50 ms-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500">
         <option value="">all</option>
         <option value="0">bezet</option>
         <option value="1">vrij</option>
-    </select>
+    </select> -->
 
     <button type="submit"
         class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
         <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-        </svg>Search
+        </svg>Zoeken
     </button>
     <a class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-red-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800"
-        href="/bedden">
+        href="/opnames">
         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
             fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -107,25 +101,6 @@
     </a>
 
 </form>
-
-<!-- <table>
-    <tr>
-        <th>ID</th>
-        <th>Afdeling</th>
-        <th>Type Zorg</th>
-        <th>Status</th>
-    </tr>
-    <tbody>
-        {% for bed in bedden%}
-        <tr>
-            <td>{{bed['id']}}</td>
-            <td>{{bed['naam']}}</td>
-            <td>{{bed['type_zorg']}}</td>
-            <td>{{"beschikbaar" if bed['is_beschikbaar'] == 1 else "Niet"}}</td>
-        </tr>
-        {% endfor%}
-    </tbody>
-</table> -->
 
 
 <div class="relative overflow-x-auto py-8">
@@ -173,7 +148,7 @@
                 </td>
 
 
-                <td class="px-6 py-2">
+                <td class="px-6 py-2 flex flex-row items-center">
                     <a href="#edit-opname{{opname['id']}}"
                         class="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -183,7 +158,7 @@
                         </svg>
                     </a>
                     <a href="/delete_opname/{{opname['id']}}"
-                        onclick="return confirm('Are You Sure You Want To Delete opname Nr {{opname['id']}} van afdeling {{opname['naam']}}?')"
+                        onclick="return confirm('Bent u zeker dat u Opname Nr. {{opname['id']}} van patient {{opname['voornaam']}} {{opname['achternaam']}} wilt verwijderen?')"
                         class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -191,6 +166,10 @@
                                 d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
                         </svg>
                     </a>
+                    {%if opname['ontslag_datumtijd'] == None %}
+                    <a href="#ontslaan-{{opname['id']}}"
+                        class=" animate-pulse text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ontslaan</button>
+                        {%endif%}
                 </td>
             </tr>
             {% endfor%}
@@ -198,52 +177,144 @@
     </table>
 </div>
 {% for opname in opnameTable%}
-<div id="edit-opname{{opname['id']}}" class="modal">
-    <form action="/edit_opname" method="post" class="p-[5px] bg-white w-[400px] h-[fit-content]">
+<div id="edit-opname{{opname['id']}}" class="modal fixed">
+    <form action="/edit_opname" method="post" class="p-8 rounded-xl bg-white min-w-[400px] h-[fit-content]">
+        <div class="font-bold text-2xl py-2 text-center">
+            Opname wijzigen - Opname Nr. {{opname['id']}}
+        </div>
+        <input value={{opname['id']}} type="text" name="id" hidden readonly>
+        <input value={{opname['bed_id']}} type="text" name="oudeBed_id" hidden readonly>
+        <input value={{opname['patient_id']}} type="text" name="oudePatient_id" hidden readonly>
+        <div class="flex flex-row gap-4 p-4">
 
-        <label for="id">
-            <p>opname Nr</p>
-        </label>
-        <input value={{opname['id']}} type="text" name="id" readonly>
+            <div class="flex flex-col gap-2 p-2">
 
-        <label for="naam">
-            <p>Naam</p>
-        </label>
-        <select name="afdeling">
-            <option value={{opname['afdeling_id']}}>{{opname['naam']}}</option>
-            {%for afdeling in B_afdeling%}
-            {% if afdeling['id'] != opname['afdeling_id'] %} <option value={{afdeling['id']}}>{{afdeling['naam']}}
-            </option> {% endif %}
-            {%endfor%}
-        </select>
+                <div>
+                    <label for="patient">Patient</label>
+                    <select required name="patient"
+                        class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="{{opname['patient_id']}}" selected>{{opname['voornaam']+'
+                            '+opname['achternaam']}}
+                        </option>
+                        {%for patient in PatientenInput%}
 
-        <label for="status">
-            <p>is_beschikbaar</p>
-        </label>
-        <select name="status">
-            <option value="1" {% if opname['is_beschikbaar']==1 %} selected {% endif %}>beschikbaar</option>
-            <option value="0" {% if opname['is_beschikbaar']==0 %} selected {% endif %}>niet beschikbaar</option>
-        </select>
+                        <option value="{{patient['id']}}" {{"selected" if patient['id']==opname['patient_id']}}>
+                            {{patient['voornaam']+' '+patient['achternaam']}}</option>
+                        {% endfor%}
+                    </select>
+                </div>
+
+                <div>
+                    <label for="bed_id">Bed</label>
+                    <select name="bed_id" required
+                        class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="{{opname['bed_id']}}" selected>{{"Bed Nr. "+
+                            opname['bed_id']|string +" in Afdeling " + opname['naam']}}
+                        </option>
+                        {%for bed in BedQuery%}
+                        <option value="{{bed['id']}}">{{"Bed Nr. "+
+                            bed['id']|string +" in Afdeling " + bed['naam']}}
+                        </option>
+                        {% endfor%}
+                    </select>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2 p-2">
+
+                <div>
+                    <label for="opname_datumtijd">Opname Datum</label>
+                    <input value="{{opname['opname_datumtijd']}}" required type="datetime-local"
+                        placeholder="Datum Opname" name="opname_datumtijd"
+                        class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+
+                {%if opname['ontslag_datumtijd'] != None%}
+                <div>
+                    <label for="ontslag_datumtijd">Ontslag Datum</label>
+                    <input value="{{opname['ontslag_datumtijd']}}" required type="datetime-local"
+                        placeholder="Datum Ontslag" name="ontslag_datumtijd"
+                        class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                {%endif%}
+            </div>
+        </div>
 
 
-        <a href="#"
-            class="inline-flex items-center py-2.5 px-3 ms-[50%] text-sm font-medium text-white bg-red-600 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 light:bg-red-600 light:hover:bg-red-700 light:focus:ring-red-800">
-            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>
-        </a>
 
-        <button type="submit"
-            class="inline-flex items-center py-2.5 px-3 ms-[87%] text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
-            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>
-        </button>
+
+
+        <div class="flex flex-row justify-evenly py-2">
+
+
+            <a href=""
+                class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-red-600 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 light:bg-red-600 light:hover:bg-red-700 light:focus:ring-red-800">
+                <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18 18 6m0 12L6 6" />
+                </svg>
+            </a>
+
+            <button type="submit"
+                class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+            </button>
+        </div>
+    </form>
+</div>
+<div id="ontslaan-{{opname['id']}}" class="modal fixed">
+    <form action="/ontslaan_opname" method="post" class="p-8 rounded-xl bg-white min-w-[400px] h-[fit-content]">
+
+        <div class="font-bold text-2xl py-2 text-center">
+            Patient ontslaan - Opname Nr. {{opname['id']}}
+        </div>
+
+        <input value="{{opname['id']}}" type="text" name="id" hidden readonly>
+        <input value="{{opname['bed_id']}}" type="text" name="bed_id" hidden readonly>
+
+        <div class="flex flex-col gap-2 py-4">
+
+            <label for="ontslag_datumtijd">
+                <p>Ontslag Datum</p>
+            </label>
+            <input
+                class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value="" min="{{opname['opname_datumtijd']}}" type="datetime-local" name="ontslag_datumtijd" required>
+
+        </div>
+
+
+
+
+        <div class="flex flex-row justify-evenly py-2">
+
+
+            <a href=""
+                class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-red-600 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 light:bg-red-600 light:hover:bg-red-700 light:focus:ring-red-800">
+                <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18 18 6m0 12L6 6" />
+                </svg>
+            </a>
+
+            <button type="submit"
+                class="inline-flex items-center py-2.5 px-3 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+            </button>
+        </div>
     </form>
 </div>
 {%endfor%}
+
+
+
 {% endblock %}
