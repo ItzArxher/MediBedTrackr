@@ -2,33 +2,61 @@
 {% block title %}
 <div class="bg-green-800 p-2 shadow-2xl my-4 rounded-[10px]">
 
-    <h2 class="text-4xl font-extrabold dark:text-white">Patienten Tab</h2>
-    <p class="my-4 text-lg text-gray-200">Hier kunt u patienten toe voegen in het database, bekijken, veranderen en deleten.</p>
+    <h2 class="text-4xl font-extrabold dark:text-white">Patienten</h2>
+    <p class="my-4 text-lg text-gray-200">Hier kunt u patiënten toevoegen, bekijken, wijzigen en verwijderen.</p>
 </div>
 {% endblock %}
 {% block main_content %}
 <form class="my-[10px] form-control bg-gray-50 p-[10px] shadow-2xl" method="post" action="/create_patient">
-    <p class="rounded-full text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]">Nieuwe Patient Maken</p>
-    <div class="flex">
-        <input required placeholder="Voornaam" name="voornaam" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-        <input required placeholder="Achternaam" name="achternaam" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-        <input required type="tel" pattern="[0-9]{3}-[0-9]{4}" placeholder="Telefoon Nr" name="telefoon_nr" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-        <input required placeholder="ID" name="id_nr" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-        <input required type="date" placeholder="Geboorte Datum" name="geboorte_datum" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-        <select required name="geslacht" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option value="">Kies Een Geslacht</option>
-        <option value="man">Man</option>
-        <option value="vrouw">Vrouw</option>
-        </select>
+    <p class="rounded-lg text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]">Nieuwe Patient Toevoegen</p>
+    <div class="flex flex-row justify-evenly py-4">
+    
+        <div class="flex flex-col gap-2">
+            <div>
+                <label for="voornaam">Voornaam</label>
+                <input required placeholder="Voornaam..." name="voornaam" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-[#6b7280] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+            </div>
+            <div>
+                <label for="achternaam">Achternaam</label>
+                <input required placeholder="Achternaam..." name="achternaam" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-[#6b7280] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+            </div>
+            <div>
+                <label for="telefoon_nummer">Telefoon Nummer</label>
+                <input required type="tel" pattern="\+[0-9]{3}[0-9]{7}" placeholder="Telefoon Nr..." name="telefoon_nr" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+            </div>
+        </div>
+        <div class="flex flex-col gap-2">
+        
+            <div>   
+                <label for="id_nr">ID Nummer</label>
+                <input required placeholder="ID Nummer..." name="id_nr" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-[#6b7280] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+            </div>
+            <div>
+                <label for="geboorte_datum">Geboorte Datum</label>
+                <input required type="date" placeholder="Geboorte Datum..." name="geboorte_datum" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+            </div>
+            <div>
+                <label for="geslacht">Geslacht</label>
+                <select required name="geslacht" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="" disabled selected>Kies Een Geslacht</option>
+                    <option value="man">Man</option>
+                    <option value="vrouw">Vrouw</option>
+                </select>
+            </div>
+        </div>
     </div>
-    <button class="my-[15px] text-center bg-green-700 font-extrabold px-[15px] py-2 rounded-[10px]" type="submit">
-    <svg class="text-center w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
-      </svg>
+    <div class="flex flex-row justify-center items-center p-4">
+    <button class="flex flex-row gap-4 text-white text-center bg-green-700 px-[15px] py-2 rounded-[10px]" type="submit">
+        <svg class="text-center w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
+        </svg>
+        <span>Patient Toevoegen</span>
     </button>
+    </div>
+
   </form>
 
-<form class="flex items-center w-[50%]" method="post" action="/patienten">
+<form class="flex items-center w-[50%] py-4" method="post" action="/patienten">
     <label for="search" class="sr-only">Search</label>
     <div class="relative w-full">
 
@@ -99,7 +127,7 @@
                     {{patient['geboorte_datum']}}
                 </td>
                 <td class="px-6 py-2">
-                    {{patient['geslacht']}}
+                    {{patient['geslacht'].capitalize()}}
                 </td>                
                 <td class="px-6 py-2">
                     <a href="#edit-patient{{patient['id']}}">Edit</a>

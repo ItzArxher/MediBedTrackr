@@ -9,26 +9,34 @@
 {% endblock %}
 {% block main_content %}
 <form class="my-[10px] form-control bg-gray-50 p-[10px] shadow-2xl" method="post" action="/create_bed">
-    <p class="rounded-full text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]">Nieuwe Bed Maken</p>
-    <div class="flex">
-        <select required name="afdeling" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="" selected>Kies Een Afdeling</option>
-            {%for afdeling in B_afdeling%}
-            <option value="{{afdeling['id']}}">{{afdeling['naam']}}</option>
-            {% endfor%}
-          </select>
+    <p class="rounded-xl text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]">Bedden toevoegen</p>
+    <div class="flex flex-col gap-2 items-center">
+        <div>
+            <label for="afdeling">Afdeling</label>
+            <select required name="afdeling" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="" disabled selected>-- Kies een afdeling --</option>
+                {%for afdeling in B_afdeling%}
+                <option value="{{afdeling['id']}}">{{afdeling['naam']}}</option>
+                {% endfor%}
+            </select>
+        </div>
         
-        <select name="status" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option value="" selected required>Bepaal Status</option>
-          <option value="1">Beschikbaar</option>
-          <option value="0">Niet Beschikbaar</option>
-        </select>
+        <div>
+            <label for="aantal_bedden">Aantal Bedden om toe te voegen</label>
+            <input type="number" value="1" step="1" min="1" required placeholder="Aantal bedden..." name="aantal_bedden" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        </div>
+        
+        
     </div>
-    <button class="my-[15px] text-center bg-green-700 font-extrabold px-[15px] py-2 rounded-[10px]" type="submit">
-    <svg class="text-center w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
-      </svg>
-    </button>
+    <div class="flex flex-row justify-center items-center p-4">
+        <button class="flex flex-row gap-4 my-[15px] text-center text-white bg-green-700 px-[15px] py-2 rounded-[10px]" type="submit">
+            <svg class="text-center w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
+            </svg>
+            <span>Bedden toevoegen</span>
+        </button>
+    </div>
+    
   </form>
 
 <form class="flex items-center w-[65%]" method="post" action="/bedden">

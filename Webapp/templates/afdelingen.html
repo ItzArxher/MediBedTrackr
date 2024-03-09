@@ -1,107 +1,226 @@
-{% extends "base.html" %}
-{% block title %}
+{% extends "base.html" %} {% block title %}
 <div class="bg-green-800 p-2 shadow-2xl my-4 rounded-[10px]">
-    <h2 class="text-4xl font-extrabold dark:text-white">Afdelingen Tab</h2>
-    <p class="my-4 text-lg text-gray-200">Hier kunt u afdelingen toe voegen in het database, bekijken, veranderen en deleten.</p>
+  <h2 class="text-4xl font-extrabold dark:text-white">Afdelingen Tab</h2>
+  <p class="my-4 text-lg text-gray-200">
+    Hier kunt u afdelingen toe voegen in het database, bekijken, veranderen en
+    deleten.
+  </p>
 </div>
-{% endblock %}
-{% block main_content %}
-<form class="my-[10px] form-control bg-gray-50 p-[10px] shadow-2xl" method="post" action="/create_afdeling">
-    <p class="rounded-full text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]">Nieuwe Afdeling Maken</p>
-    <div class="flex">
-        <input required placeholder="Afdeling Naam" name="naam" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-        <input required type="number" placeholder="Etage" name="etage" class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-white-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+{% endblock %} {% block main_content %}
+<form
+  class="my-[10px] form-control bg-gray-50 p-[10px] shadow-2xl"
+  method="post"
+  action="/create_afdeling"
+>
+  <p
+    class="rounded-xl text-center font-extrabold bg-green-700 text-white shadow-2xl w-[250px] py-[10px] my-[10px]"
+  >
+    Nieuwe Afdeling Maken
+  </p>
+  <div class="flex flex-col items-center justify-center gap-4">
+    <div>
+      <label>Afdeling Naam</label>
+      <input
+        required
+        placeholder="Afdeling Naam"
+        name="naam"
+        class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-[#6b7280] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      />
     </div>
-    <button class="my-[15px] text-center bg-green-700 font-extrabold px-[15px] py-2 rounded-[10px]" type="submit">
-    <svg class="text-center w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
+    <div>
+      <label>Etage Nummer</label>
+      <input
+        required
+        type="number"
+        placeholder="Etage"
+        name="etage"
+        class="mx-[2px] my-[5px] w-[250px] bg-white-50 border border-[#6b7280] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      />
+    </div>
+  </div>
+  <div class="flex flex-row justify-center gap-4">
+    <button
+      class="flex flex-row justify-center gap-4 text-white my-[15px] text-center bg-green-700 px-[15px] py-2 rounded-[10px]"
+      type="submit"
+    >
+      <svg
+        class="text-center w-6 h-6 text-gray-800 dark:text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m5 12 4.7 4.5 9.3-9"
+        />
       </svg>
+      <span>Afdeling toevoegen</span>
     </button>
-  </form>
+  </div>
+</form>
 
-<form class="flex items-center w-[50%]">
-    <label for="search" class="sr-only">Search</label>
-    <div class="relative w-full">
-
-        <input type="text" id="search"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full  p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500"
-            placeholder="Search..." required>
-
-    </div>
-    <button type="submit"
-        class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800">
-        <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-        </svg>Search
-    </button>
+<form action="/afdelingen" class="flex items-center w-[50%] py-4" method="post">
+  <label for="search" class="sr-only">Search</label>
+  <div class="relative w-full">
+    <input
+      type="text"
+      id="search"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-green-500 light:focus:border-green-500"
+      placeholder="Search..."
+      name="search"
+    />
+  </div>
+  <button
+    type="submit"
+    class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800"
+  >
+    <svg
+      class="w-4 h-4 me-2"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 20 20"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+      /></svg
+    >Search
+  </button>
 </form>
 
 <div class="relative overflow-x-auto py-8">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 light:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 light:bg-gray-700 light:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Afdeling
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    etage
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Aantal bedden
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Status
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Acties
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for afdeling in afdelingen%}
-            <tr class="bg-white border-b light:bg-gray-800 light:border-gray-700">
-                <td scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap light:text-white">
-                    {{afdeling['naam']}}
-                </td>
-                <td class="px-6 py-2">
-                    {{afdeling['etage']}}
-                </td>
-                <td class="px-6 py-2">
-                    {{aantalBedden['beschikbare_beden']}}
-                </td>
-                <td class="px-6 py-2">
-                    {% if afdeling['is_beschikbaar'] == 1 %}
-                    <div
-                        class="w-full flex flex-row items-center gap-2 justify-left relative  bg-green-300 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded light:bg-green-900 light:text-green-300">
-                        <span class="relative flex h-3 w-3">
-                            <span
-                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-800 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                        </span>Beschikbaar
-                    </div>
-                    {% else %}
-                    <div
-                        class="w-full flex flex-row items-center gap-2 justify-left relative bg-red-300 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded light:bg-red-900 light:text-red-300">
-                        <span class="relative flex h-3 w-3">
-                            <span
-                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-800 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                        </span>Niet
-                        Beschikbaar
-                    </div>
-                    {% endif %}
+  <table
+    class="w-full text-sm text-left rtl:text-right text-gray-500 light:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 light:bg-gray-700 light:text-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-6 py-3">Afdeling</th>
+        <th scope="col" class="px-6 py-3">etage</th>
+        <th scope="col" class="px-6 py-3">Aantal bedden</th>
 
-                </td>
-                <td class="px-6 py-2">
-                    <a href="/test/{{afdeling['id']}}">Edit</a>
-                    <a href="/test/{{afdeling['id']}}">Delete</a>
-                </td>
-            </tr>
-            {% endfor%}
-        </tbody>
-    </table>
+        <th scope="col" class="px-6 py-3">Acties</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for afdeling in aantalBedden%}
+      <tr class="bg-white border-b light:bg-gray-800 light:border-gray-700">
+        <td
+          scope="row"
+          class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap light:text-black"
+        >
+          {{afdeling['naam']}}
+        </td>
+        <td class="px-6 py-2">{{afdeling['etage']}}</td>
+        <td class="px-6 py-2">{{afdeling['beschikbare_bedden']}}</td>
+        {#
+        <td class="px-6 py-2">
+          {% if afdeling['is_beschikbaar'] == 1 %}
+          <div
+            class="w-full flex flex-row items-center gap-2 justify-left relative bg-green-300 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded light:bg-green-900 light:text-green-300"
+          >
+            <span class="relative flex h-3 w-3">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-800 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3 bg-green-500"
+              ></span> </span
+            >Beschikbaar
+          </div>
+          {% else %}
+          <div
+            class="w-full flex flex-row items-center gap-2 justify-left relative bg-red-300 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded light:bg-red-900 light:text-red-300"
+          >
+            <span class="relative flex h-3 w-3">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-800 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3 bg-red-500"
+              ></span> </span
+            >Niet Beschikbaar
+          </div>
+          {% endif %} #}
+        </td>
+        <td class="px-6 py-2">
+          <a href="#edit-afdeling{{afdeling['id']}}">Edit</a>
+          <a href="/delete_afdeling/{{afdeling['id']}}">Delete</a>
+        </td>
+      </tr>
+      {% endfor%}
+    </tbody>
+  </table>
 </div>
+{% for afdeling in aantalBedden%}
+<div id="edit-afdeling{{afdeling['id']}}" class="modal">
+  <form
+    action="/edit_afdeling"
+    method="post"
+    class="p-[5px] bg-white w-[400px] h-[fit-content]"
+  >
+    <label for="afdeling_naam"><p>Afdeling Naam</p></label>
+    <input
+      value="{{afdeling['naam']}}"
+      type="text"
+      name="afdeling_naam"
+      required
+    />
 
+    <label for="etage"><p>Etage</p></label>
+    <input value={{afdeling['etage']}} type="text" name="etage" required> <input
+    value={{afdeling['id']}} type="number" name="id" hidden>
 
-{% endblock %}
+    <a
+      href="#"
+      class="inline-flex items-center py-2.5 px-3 ms-[50%] text-sm font-medium text-white bg-red-600 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 light:bg-red-600 light:hover:bg-red-700 light:focus:ring-red-800"
+    >
+      <svg
+        class="w-6 h-6 text-gray-800 dark:text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
+      </svg>
+    </a>
+
+    <button
+      type="submit"
+      class="inline-flex items-center py-2.5 px-3 ms-[87%] text-sm font-medium text-white bg-green-600 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 light:bg-green-600 light:hover:bg-green-700 light:focus:ring-green-800"
+    >
+      <svg
+        class="w-6 h-6 text-gray-800 dark:text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
+      </svg>
+    </button>
+  </form>
+</div>
+{%endfor%} {% endblock %}

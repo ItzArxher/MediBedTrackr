@@ -35,7 +35,10 @@ def create_frontendblueprint(db_conn):
         if request.method == 'POST':
             search = request.form['search']
             status = request.form['status']
-            curr.execute("SELECT b.id, a.naam, b.is_beschikbaar FROM bed as b INNER JOIN afdeling AS a ON b.afdeling_id = a.id WHERE (a.naam LIKE %s OR b.id LIKE %s) AND b.is_beschikbaar LIKE %s", ('%' + search + '%', '%' + search + '%', '%' + status + '%'))
+            if status == "":
+                curr.execute("SELECT b.id, a.naam, b.is_beschikbaar FROM bed as b INNER JOIN afdeling AS a ON b.afdeling_id = a.id WHERE (a.naam LIKE %s OR b.id LIKE %s)", ('%' + search + '%', '%' + search + '%',))
+            else:
+                curr.execute("SELECT b.id, a.naam, b.is_beschikbaar FROM bed as b INNER JOIN afdeling AS a ON b.afdeling_id = a.id WHERE (a.naam LIKE %s OR b.id LIKE %s) AND b.is_beschikbaar=%s", ('%' + search + '%', '%' + search + '%',status))
             bedden = curr.fetchall()
         print(bedden)
         return render_template("bedden.html", bedden=bedden, B_afdeling=B_afdeling)
@@ -69,9 +72,10 @@ def create_frontendblueprint(db_conn):
     def create_bed():
         if request.method == 'POST':
             afdeling = request.form['afdeling']
-            status = request.form['status']
+            aantal_bedden = int(request.form['aantal_bedden'])
             curr = mysql.connection.cursor()
-            curr.execute("INSERT INTO bed (id, afdeling_id, is_beschikbaar) VALUES (NULL, %s, %s)", (afdeling, status,))
+            for i in range(aantal_bedden):
+                curr.execute("INSERT INTO bed (afdeling_id, is_beschikbaar) VALUES (%s, 1)", (afdeling,))
             mysql.connection.commit()
             curr.close()
             return redirect(url_for("frontend.bedden"))
@@ -144,7 +148,7 @@ def create_frontendblueprint(db_conn):
             geboorte_datum = request.form['geboorte_datum']
             geslacht = request.form['geslacht']
             curr = mysql.connection.cursor()
-            curr.execute("INSERT into patient (id,voornaam,achternaam,telefoon_nr,id_nr,geboorte_datum,geslacht) VALUES (NULL, %s, %s, %s, %s, %s, %s)", (voornaam, achternaam, telefoon_nr, id_nr, geboorte_datum, geslacht))
+            curr.execute("INSERT into patient (voornaam,achternaam,telefoon_nr,id_nr,geboorte_datum,geslacht) VALUES (%s, %s, %s, %s, %s, %s)", (voornaam, achternaam, telefoon_nr, id_nr, geboorte_datum, geslacht))
             mysql.connection.commit()
             return redirect(url_for('frontend.patienten'))
         return redirect(url_for('frontend.patienten'))
@@ -173,9 +177,17 @@ def create_frontendblueprint(db_conn):
         curr = mysql.connection.cursor()
         curr1 = mysql.connection.cursor()
         curr.execute("SELECT count(*) as count, a.id, a.naam, a.etage, b.id, b.is_beschikbaar FROM afdeling as a INNER JOIN bed as b ON a.id = b.afdeling_id WHERE b.is_beschikbaar=1 GROUP BY a.naam")
-        curr1.execute("SELECT COUNT(*) OVER (ORDER BY a.id) AS aantal_bedden, a.naam, (SELECT COUNT(*) FROM bed AS b WHERE b.afdeling_id = a.id AND b.is_beschikbaar = 1) AS beschikbare_beden FROM afdeling AS a INNER JOIN bed AS b ON a.id = b.afdeling_id;")
-        afdelingen = curr.fetchall()
+        curr1.execute("SELECT a.id, a.naam, a.etage, COUNT(b.id) AS beschikbare_bedden  FROM afdeling AS a LEFT JOIN bed AS b ON a.id = b.afdeling_id GROUP BY a.naam ORDER BY a.id")
+        
         aantalBedden = curr1.fetchall()
+        afdelingen = curr.fetchall()
+        if request.method == 'POST':
+            search = request.form['search']
+            print("Search is")
+            print(search)
+            curr1.execute("SELECT a.id, a.naam, a.etage, COUNT(b.id) AS beschikbare_bedden  FROM afdeling AS a LEFT JOIN bed AS b ON a.id = b.afdeling_id  WHERE a.naam LIKE %s GROUP BY a.naam ORDER BY a.id", ('%' + search + '%',))
+            aantalBedden = curr1.fetchall()
+
         return render_template("afdelingen.html", aantalBedden = aantalBedden, afdelingen=afdelingen)
     
 
@@ -189,6 +201,29 @@ def create_frontendblueprint(db_conn):
             curr.execute("INSERT into afdeling (id,naam,etage) VALUES (NULL, %s, %s)", (naam, etage))
             mysql.connection.commit()
             return redirect(url_for('frontend.afdelingen'))
+        
+
+        
+        
+    @frontend.route('/edit_afdeling', methods=['GET', 'POST'])
+    def edit_afdeling():
+        if request.method == 'POST':
+            ID = request.form['id']
+            afdeling_naam = request.form['afdeling_naam']
+            etage = request.form['etage']
+            curr = mysql.connection.cursor()
+            curr.execute("UPDATE afdeling SET naam=%s,etage=%s WHERE id = %s", (afdeling_naam, etage, ID))
+            mysql.connection.commit()
+            return redirect(url_for('frontend.afdelingen'))
+        return redirect(url_for('frontend.afdelingen'))   
+
+    @frontend.route('/delete_afdeling/<int:id>', methods=['GET', 'POST'])
+    def delete_afdeling(id):
+        curr = mysql.connection.cursor()
+        curr.execute("DELETE FROM afdeling WHERE id = %s", (id,))
+        mysql.connection.commit()
+        return redirect (url_for('frontend.afdelingen'))
+ 
         
 ##################################################################################################################################################
 
@@ -222,7 +257,7 @@ def create_frontendblueprint(db_conn):
         curr1.execute("SELECT * From patient")
         curr2.execute("SELECT * From afdeling")
         curr3.execute("SELECT * From bed")
-        curr4.execute("SELECT * From patient where opgenomen = 0")
+        curr4.execute("SELECT * FROM patient")
         curr5.execute("SELECT a.id, a.naam, a.etage, b.id, b.afdeling_id, b.is_beschikbaar From bed as b INNER JOIN afdeling as a ON b.afdeling_id = a.id where is_beschikbaar = 1")
         opnameTable = curr.fetchall()
         PatientenInput = curr4.fetchall()
@@ -240,14 +275,21 @@ def create_frontendblueprint(db_conn):
             patient = request.form['patient']
             bed_id = request.form['bed_id']
             opname_datumtijd = request.form['opname_datumtijd']
-            ontslag_datumtijd = request.form['ontslag_datumtijd']
+            ontslag_datumtijd = request.form['ontslag_datumtijd'] or None
             curr = mysql.connection.cursor()
             curr1 = mysql.connection.cursor()
             curr2 = mysql.connection.cursor()
-            curr1.execute("UPDATE patient SET opgenomen=1 WHERE id = %s", (patient,))
+            # curr1.execute("UPDATE patient SET opgenomen=1 WHERE id = %s", (patient,))
             curr2.execute("UPDATE bed SET is_beschikbaar=0 WHERE id = %s", (bed_id,))
             curr.execute("INSERT into opname (id,bed_id,patient_id,opname_datumtijd,ontslag_datumtijd) VALUES (NULL, %s, %s, %s, %s)", (bed_id, patient, opname_datumtijd, ontslag_datumtijd))
             mysql.connection.commit()
             return redirect(url_for('frontend.opnames'))
+    
+    @frontend.route('/delete_opname/<int:id>', methods=['GET', 'POST'])
+    def delete_opname(id):
+        curr = mysql.connection.cursor()
+        curr.execute("DELETE FROM opname WHERE id = %s", (id,))
+        mysql.connection.commit()
+        return redirect (url_for('frontend.opnames'))
     
     return frontend
